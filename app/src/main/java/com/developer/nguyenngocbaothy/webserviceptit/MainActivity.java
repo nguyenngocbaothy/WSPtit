@@ -10,8 +10,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Rent rent = new Rent(MainActivity.this);
-        rent.getBookUser(17);
+        Users users = new Users(MainActivity.this);
+        users.search("Bin");
 
     }
 
