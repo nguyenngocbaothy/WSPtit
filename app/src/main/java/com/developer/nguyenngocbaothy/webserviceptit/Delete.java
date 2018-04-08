@@ -13,24 +13,20 @@ import java.net.URL;
  * Created by HOME on 08-Apr-18.
  */
 
-public class PostCategories extends AsyncTask<String, Void, String> {
-
+public class Delete extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
-
+        StringBuilder builder = null;
         try {
             URL url = new URL(params[0]);
-
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setRequestMethod("DELETE");
             httpURLConnection.setRequestProperty("Content-Type","application/json;charset=UTF-8");
-            httpURLConnection.setDoOutput(true);
-            httpURLConnection.setDoInput(true);
 
             InputStreamReader inputStreamReader = new InputStreamReader(httpURLConnection.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String line = bufferedReader.readLine();
-            StringBuilder builder = new StringBuilder();
+            builder = new StringBuilder();
             while(line!=null) {
                 builder.append(line);
                 line = bufferedReader.readLine();

@@ -64,7 +64,7 @@ public class Categories {
     // cuong chua lam xong
 
 //    public void searchCategories(String name) {
-//        GetCatalogies download =  new GetCatalogies();
+//        Get download =  new Get();
 //        download.execute("https://cuongmanh2311.000webhostapp.com/categories/search/" + name);
 //
 //        try {

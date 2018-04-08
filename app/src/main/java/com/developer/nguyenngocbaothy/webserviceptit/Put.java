@@ -13,14 +13,14 @@ import java.net.URL;
  * Created by HOME on 08-Apr-18.
  */
 
-public class GetCatalogies extends AsyncTask<String, Void, String>{
+public class Put extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
         StringBuilder builder = null;
         try {
             URL url = new URL(params[0]);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setRequestMethod("PUT");
             httpURLConnection.setRequestProperty("Content-Type","application/json;charset=UTF-8");
 
             InputStreamReader inputStreamReader = new InputStreamReader(httpURLConnection.getInputStream());
@@ -41,5 +41,6 @@ public class GetCatalogies extends AsyncTask<String, Void, String>{
 
 
         return null;
+
     }
 }

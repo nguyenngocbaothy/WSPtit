@@ -10,8 +10,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Permission permission = new Permission(MainActivity.this);
-        permission.postPermission("test2");
+        Rent rent = new Rent(MainActivity.this);
+        rent.getBookUser(17);
 
     }
 
