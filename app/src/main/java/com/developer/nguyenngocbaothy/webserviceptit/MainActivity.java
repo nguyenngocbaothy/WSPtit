@@ -10,8 +10,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Categories categories = new Categories(MainActivity.this);
-        categories.getAllChild(3);
+        Permission permission = new Permission(MainActivity.this);
+        permission.postPermission("test2");
 
     }
 

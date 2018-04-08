@@ -1,7 +1,6 @@
 package com.developer.nguyenngocbaothy.webserviceptit;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -22,12 +21,11 @@ public class Categories {
     }
 
     public void getCategories() {
-        GetCatalogies download =  new GetCatalogies();
+        Get download =  new Get();
         download.execute("https://cuongmanh2311.000webhostapp.com/categories");
 
         try {
             String data = download.get();
-            Log.d("kt", data);
             JSONArray jsonArray = new JSONArray(data);
             for(int i=0; i<jsonArray.length(); i++)
             {
@@ -46,13 +44,12 @@ public class Categories {
 
     }
 
-    public void getCategoryById(String id) {
-        GetCatalogies download =  new GetCatalogies();
+    public void getCategoryById(int id) {
+        Get download = new Get();
         download.execute("https://cuongmanh2311.000webhostapp.com/categories/show/" + id);
 
         try {
             String data = download.get();
-            Log.d("cateid", data);
             Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
 
 
@@ -83,23 +80,23 @@ public class Categories {
 //        }
 //    }
 
-    public void postcategories(String name, int  id, String description) {
-        PostCategories post =  new PostCategories();
+    public void postcategories(String name, int id, String description) {
+        Post post =  new Post();
         post.execute("https://cuongmanh2311.000webhostapp.com/categories/store?name=" + name + "&parent_id=" + id + "&description=" + description);
     }
 
     public void updateCategories(int id, String name, int parent_id, String descripton) {
-        PostCategories post = new PostCategories();
+        Post post = new Post();
         post.execute("https://cuongmanh2311.000webhostapp.com/categories/update?id=" + id + "&name=" + name + "&parent_id=" + parent_id + "&description=" + descripton);
     }
 
     public void deleteCategories(int id) {
-        GetCatalogies get = new GetCatalogies();
+        Get get = new Get();
         get.execute("https://cuongmanh2311.000webhostapp.com/categories/destroy/" + id);
     }
 
     public void getAllChild(int id) {
-        GetCatalogies get = new GetCatalogies();
+        Get get = new Get();
         get.execute("https://cuongmanh2311.000webhostapp.com/categories/parent?id=" + id);
 
         try {
