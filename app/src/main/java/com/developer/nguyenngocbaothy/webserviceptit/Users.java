@@ -15,14 +15,16 @@ import java.util.concurrent.ExecutionException;
 
 public class Users {
     private static Context context;
+    private String url;
 
-    public Users(Context c) {
+    public Users(Context c, String url) {
         this.context = c;
+        this.url = url;
     }
 
     public void getAllUsers() {
         Get download =  new Get();
-        download.execute("https://cuongmanh2311.000webhostapp.com/users");
+        download.execute(this.url + "/users");
 
         try {
             String data = download.get();
@@ -45,7 +47,7 @@ public class Users {
 
     public void getUserById(int id) {
         Get get = new Get();
-        get.execute("https://cuongmanh2311.000webhostapp.com/users/show/" + id);
+        get.execute(this.url + "/users/show/" + id);
 
         try {
             String data = get.get();
@@ -62,7 +64,7 @@ public class Users {
 
     public void login(String email, String password) {
         Post post =  new Post();
-        post.execute("https://cuongmanh2311.000webhostapp.com/users/login?email=" + email + "&password=" + password);
+        post.execute(this.url + "/users/login?email=" + email + "&password=" + password);
 
         try {
             String data = post.get();
@@ -78,7 +80,7 @@ public class Users {
 
     public void postUser(String name, String email, String password, int role) {
         Post post =  new Post();
-        post.execute("https://cuongmanh2311.000webhostapp.com/users/store?name=" + name + "&email=" + email + "&password=" + password + "&role=" + role);
+        post.execute(this.url + "/users/store?name=" + name + "&email=" + email + "&password=" + password + "&role=" + role);
 
         try {
             String data = post.get();
@@ -111,7 +113,7 @@ public class Users {
 
         public void deleteUser(int userId) {
         Get get =  new Get();
-        get.execute("https://cuongmanh2311.000webhostapp.com/users/destroy/" + userId);
+        get.execute(this.url + "/users/destroy/" + userId);
 
         try {
             String data = get.get();
@@ -127,7 +129,7 @@ public class Users {
 
     public void search(String name) {
         Get get =  new Get();
-        get.execute("https://cuongmanh2311.000webhostapp.com/users/search/?name=" + name);
+        get.execute(this.url + "/users/search/?name=" + name);
 
         try {
             String data = get.get();
@@ -143,7 +145,7 @@ public class Users {
 
     public void Permission(int role) {
         Get get =  new Get();
-        get.execute("https://cuongmanh2311.000webhostapp.com/users/permission/?role=" + role);
+        get.execute(this.url + "/users/permission/?role=" + role);
 
         try {
             String data = get.get();
@@ -159,7 +161,7 @@ public class Users {
 
     public void UserPermission(int role) {
         Get get =  new Get();
-        get.execute("https://cuongmanh2311.000webhostapp.com/users/user_permission/?role=" + role);
+        get.execute(this.url + "/users/user_permission/?role=" + role);
 
         try {
             String data = get.get();

@@ -15,14 +15,16 @@ import java.util.concurrent.ExecutionException;
 
 public class Rent  {
     private static Context context;
+    private String url;
 
-    public Rent(Context c) {
+    public Rent(Context c, String url) {
         this.context = c;
+        this.url = url;
     }
 
     public void getAllRent() {
         Get download =  new Get();
-        download.execute("https://cuongmanh2311.000webhostapp.com/rent");
+        download.execute(this.url + "/rent");
 
         try {
             String data = download.get();
@@ -45,7 +47,7 @@ public class Rent  {
 
     public void postRent(int user_id, int pro_id) {
         Post post =  new Post();
-        post.execute("https://cuongmanh2311.000webhostapp.com/rent/store?user_id=" + user_id + "&pro_id=" + pro_id);
+        post.execute(this.url + "/rent/store?user_id=" + user_id + "&pro_id=" + pro_id);
     }
 
     // API loi
@@ -62,7 +64,7 @@ public class Rent  {
 
     public void getBookUser(int userId) {
         Get get = new Get();
-        get.execute("https://cuongmanh2311.000webhostapp.com/rent/user?user_id=" + userId);
+        get.execute(this.url + "/rent/user?user_id=" + userId);
 
         try {
             String data = get.get();

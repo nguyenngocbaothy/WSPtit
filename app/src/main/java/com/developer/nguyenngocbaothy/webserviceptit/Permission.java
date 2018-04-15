@@ -15,14 +15,16 @@ import java.util.concurrent.ExecutionException;
 
 public class Permission {
     private static Context context;
+    private String url;
 
-    public Permission(Context c) {
+    public Permission(Context c, String url) {
         this.context = c;
+        this.url = url;
     }
 
     public void getAllPermission() {
         Get download =  new Get();
-        download.execute("https://cuongmanh2311.000webhostapp.com/permission");
+        download.execute(this.url + "/permission");
 
         try {
             String data = download.get();
@@ -45,7 +47,7 @@ public class Permission {
 
     public void getPermissionById(int id) {
         Get download = new Get();
-        download.execute("https://cuongmanh2311.000webhostapp.com/permission/show/" + id);
+        download.execute(this.url + "/permission/show/" + id);
 
         try {
             String data = download.get();
@@ -62,7 +64,7 @@ public class Permission {
 
     public void postPermission(String name) {
         Post post =  new Post();
-        post.execute("https://cuongmanh2311.000webhostapp.com/permission/store?name=" + name);
+        post.execute(this.url + "/permission/store?name=" + name);
     }
 
     // api bi loi

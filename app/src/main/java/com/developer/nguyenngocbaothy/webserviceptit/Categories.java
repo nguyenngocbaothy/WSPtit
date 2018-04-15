@@ -15,14 +15,16 @@ import java.util.concurrent.ExecutionException;
 
 public class Categories {
     private static Context context;
+    private String url = "";
 
-    public Categories(Context c) {
+    public Categories(Context c, String url) {
         this.context = c;
+        this.url = url;
     }
 
     public void getCategories() {
         Get download =  new Get();
-        download.execute("https://cuongmanh2311.000webhostapp.com/categories");
+        download.execute(this.url + "/categories");
 
         try {
             String data = download.get();
@@ -46,7 +48,7 @@ public class Categories {
 
     public void getCategoryById(int id) {
         Get download = new Get();
-        download.execute("https://cuongmanh2311.000webhostapp.com/categories/show/" + id);
+        download.execute(this.url + "/categories/show/" + id);
 
         try {
             String data = download.get();
@@ -82,22 +84,22 @@ public class Categories {
 
     public void postcategories(String name, int id, String description) {
         Post post =  new Post();
-        post.execute("https://cuongmanh2311.000webhostapp.com/categories/store?name=" + name + "&parent_id=" + id + "&description=" + description);
+        post.execute(this.url + "/categories/store?name=" + name + "&parent_id=" + id + "&description=" + description);
     }
 
     public void updateCategories(int id, String name, int parent_id, String descripton) {
         Post post = new Post();
-        post.execute("https://cuongmanh2311.000webhostapp.com/categories/update?id=" + id + "&name=" + name + "&parent_id=" + parent_id + "&description=" + descripton);
+        post.execute(this.url + "/categories/update?id=" + id + "&name=" + name + "&parent_id=" + parent_id + "&description=" + descripton);
     }
 
     public void deleteCategories(int id) {
         Get get = new Get();
-        get.execute("https://cuongmanh2311.000webhostapp.com/categories/destroy/" + id);
+        get.execute(this.url + "/categories/destroy/" + id);
     }
 
     public void getAllChild(int id) {
         Get get = new Get();
-        get.execute("https://cuongmanh2311.000webhostapp.com/categories/parent?id=" + id);
+        get.execute(this.url + "/categories/parent?id=" + id);
 
         try {
             String data = get.get();
