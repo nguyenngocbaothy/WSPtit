@@ -20,7 +20,10 @@
         </activity>
         <activity android:name=".ListProduct" />
         <activity android:name=".DetailProductActivity" />
-        <activity android:name=".AddProductActivity"></activity>
+        <activity android:name=".AddProductActivity" />
+        <activity android:name=".ListCategoryActivity" />
+        <activity android:name=".DetailCategoryActivity" />
+        <activity android:name=".AddCategoryActivity"></activity>
     </application>
 
 </manifest>

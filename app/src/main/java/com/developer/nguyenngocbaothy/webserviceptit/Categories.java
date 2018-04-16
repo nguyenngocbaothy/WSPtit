@@ -15,25 +15,26 @@ import java.util.concurrent.ExecutionException;
 
 public class Categories {
     private static Context context;
-    private String url = "";
+    private String url = "https://cuongmanh2311.000webhostapp.com";
 
-    public Categories(Context c, String url) {
+    public Categories(Context c) {
         this.context = c;
-        this.url = url;
     }
 
-    public void getCategories() {
+    public JSONArray getCategories() {
+        JSONArray jsonArray = null;
+
         Get download =  new Get();
         download.execute(this.url + "/categories");
 
         try {
             String data = download.get();
-            JSONArray jsonArray = new JSONArray(data);
-            for(int i=0; i<jsonArray.length(); i++)
-            {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Toast.makeText(context, jsonObject+"", Toast.LENGTH_LONG).show();
-            }
+            jsonArray = new JSONArray(data);
+//            for(int i=0; i<jsonArray.length(); i++)
+//            {
+//                JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                Toast.makeText(context, jsonObject+"", Toast.LENGTH_LONG).show();
+//            }
 
 
         } catch (InterruptedException e) {
@@ -44,6 +45,7 @@ public class Categories {
             e.printStackTrace();
         }
 
+        return jsonArray;
     }
 
     public void getCategoryById(int id) {
@@ -85,16 +87,63 @@ public class Categories {
     public void postcategories(String name, int id, String description) {
         Post post =  new Post();
         post.execute(this.url + "/categories/store?name=" + name + "&parent_id=" + id + "&description=" + description);
+        try {
+
+            String data = post.get();
+            JSONObject obj = new JSONObject(data);
+            if(Boolean.valueOf(obj.get("status").toString())) {
+                Toast.makeText(context, "Create successfully", Toast.LENGTH_SHORT).show();
+            }
+            // Toast.makeText(context, data+"", Toast.LENGTH_LONG).show();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updateCategories(int id, String name, int parent_id, String descripton) {
         Post post = new Post();
         post.execute(this.url + "/categories/update?id=" + id + "&name=" + name + "&parent_id=" + parent_id + "&description=" + descripton);
+
+        try {
+            String data = post.get();
+            JSONObject obj = new JSONObject(data);
+            if(Boolean.valueOf(obj.get("status").toString())) {
+                Toast.makeText(context, "Update successfully", Toast.LENGTH_SHORT).show();
+            }
+            //Toast.makeText(context, data+"", Toast.LENGTH_LONG).show();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void deleteCategories(int id) {
         Get get = new Get();
         get.execute(this.url + "/categories/destroy/" + id);
+
+        try {
+            String data = get.get();
+            JSONObject obj = new JSONObject(data);
+            if(Boolean.valueOf(obj.get("status").toString())) {
+                Toast.makeText(context, "delete successfully", Toast.LENGTH_SHORT).show();
+            }
+            //Toast.makeText(context, data+"", Toast.LENGTH_LONG).show();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getAllChild(int id) {

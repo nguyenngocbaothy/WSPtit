@@ -50,7 +50,6 @@ public class DetailProductActivity extends AppCompatActivity {
             edtIntro.setText(obj.get("intro").toString());
             edtDes.setText(obj.get("description").toString());
 
-//            URL url = new URL(obj.get("image").toString());
             Picasso.with(getBaseContext()).load(obj.get("image").toString()).into(img);
 
         } catch (JSONException e) {
@@ -81,6 +80,11 @@ public class DetailProductActivity extends AppCompatActivity {
                         edtDes.getText().toString()
                 );
 
+                edtName.setEnabled(false);
+                edtCategory.setEnabled(false);
+                edtPrice.setEnabled(false);
+                edtIntro.setEnabled(false);
+                edtDes.setEnabled(false);
             }
         });
     }

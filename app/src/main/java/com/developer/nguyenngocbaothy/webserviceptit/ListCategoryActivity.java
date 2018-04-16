@@ -18,75 +18,74 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ListProduct extends AppCompatActivity {
-    String url = "https://cuongmanh2311.000webhostapp.com";
-    ListView listProduct;
+public class ListCategoryActivity extends AppCompatActivity {
 
-    ArrayList arrProduct;
-    JSONArray jsonArrayProduct;
-    JSONObject obj;
+    ListView listCategory;
+
+    JSONArray jsonArrayCategory;
+    JSONObject jsonObject = null;
+    ArrayList arrCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_product);
-        listProduct = (ListView) findViewById(R.id.listProduct);
+        setContentView(R.layout.activity_list_category);
+        listCategory = (ListView) findViewById(R.id.listCategory);
 
-        arrProduct = new ArrayList<>();
+        arrCategory = new ArrayList<>();
 
-        Product p = new Product(this);
-        jsonArrayProduct = p.getProduct();
-        for(int i=0; i<jsonArrayProduct.length(); i++){
-            JSONObject jsonObject = null;
+        Categories c = new Categories(ListCategoryActivity.this);
+        jsonArrayCategory = c.getCategories();
+        for(int i=0; i<jsonArrayCategory.length(); i++)
+        {
             try {
-                jsonObject = jsonArrayProduct.getJSONObject(i);
-                arrProduct.add(jsonObject.get("name"));
-                //Toast.makeText(this, jsonObject.get("name").toString(), Toast.LENGTH_SHORT).show();
+                jsonObject = jsonArrayCategory.getJSONObject(i);
+                arrCategory.add(jsonObject.get("name"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
-        final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrProduct);
-        listProduct.setAdapter(adapter);
+        final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrCategory);
+        listCategory.setAdapter(adapter);
 
 
-        listProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(ListProduct.this, position+"", Toast.LENGTH_SHORT).show();
-
                 try {
-                    Intent i = new Intent(ListProduct.this, DetailProductActivity.class);
-                    i.putExtra("productDetail", jsonArrayProduct.get(position).toString());
+
+                    Intent i = new Intent(ListCategoryActivity.this, DetailCategoryActivity.class);
+                    i.putExtra("categoryDetail", jsonArrayCategory.get(position).toString());
                     startActivity(i);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
         });
 
-        listProduct.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listCategory.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(ListProduct.this);
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, final long id) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(ListCategoryActivity.this);
                 alert.setTitle("DELETE");
                 alert.setIcon(R.mipmap.ic_launcher);
-                alert.setMessage("Are you sure to delete");
+                alert.setMessage("Are you sure to delete?");
 
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Product p = new Product(ListProduct.this);
+                        Categories c = new Categories(ListCategoryActivity.this);
                         try {
-                            JSONObject obj = (JSONObject) jsonArrayProduct.get(position);
+                            JSONObject obj = (JSONObject) jsonArrayCategory.get(position);
                             //Toast.makeText(ListProduct.this, obj.get("id")+"", Toast.LENGTH_SHORT).show();
-                            p.deleteProduct(Integer.parseInt(obj.get("id")+""));
+                            c.deleteCategories(Integer.parseInt(obj.get("id")+""));
+                            arrCategory.remove(position);
                             adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 });
 
@@ -96,8 +95,8 @@ public class ListProduct extends AppCompatActivity {
 
                     }
                 });
-
                 alert.show();
+
                 return false;
             }
         });
@@ -105,19 +104,18 @@ public class ListProduct extends AppCompatActivity {
 
     }
 
-    // create menu add
+    // menu add
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add_product, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    // action click on menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menuAdd:
-                Intent i = new Intent(ListProduct.this, AddProductActivity.class);
+                Intent i = new Intent(ListCategoryActivity.this, AddCategoryActivity.class);
                 startActivity(i);
                 break;
         }
