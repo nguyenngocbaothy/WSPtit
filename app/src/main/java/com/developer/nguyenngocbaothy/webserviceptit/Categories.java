@@ -48,21 +48,24 @@ public class Categories {
         return jsonArray;
     }
 
-    public void getCategoryById(int id) {
+    public JSONObject getCategoryById(int id) {
+        JSONObject obj = null;
         Get download = new Get();
         download.execute(this.url + "/categories/show/" + id);
 
         try {
             String data = download.get();
-            Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
-
+            obj = new JSONObject(data);
+            //Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
+        return obj;
     }
 
     // cuong chua lam xong

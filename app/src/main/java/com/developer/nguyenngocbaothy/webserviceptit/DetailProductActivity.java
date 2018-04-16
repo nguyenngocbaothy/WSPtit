@@ -3,14 +3,21 @@ package com.developer.nguyenngocbaothy.webserviceptit;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import static com.developer.nguyenngocbaothy.webserviceptit.R.id.imageView;
 
@@ -18,9 +25,15 @@ public class DetailProductActivity extends AppCompatActivity {
     EditText edtName, edtCategory, edtPrice, edtIntro, edtDes;
     Button btnUpdate, btnSave;
     ImageView img;
+    Spinner spinner;
 
     String url = "https://cuongmanh2311.000webhostapp.com";
     String id;
+
+    JSONArray jsonArray;
+    ArrayList arrCate;
+    ArrayList arrIdCate;
+    int chooseId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +47,7 @@ public class DetailProductActivity extends AppCompatActivity {
         btnUpdate = (Button) findViewById(R.id.btnUpdate);
         btnSave = (Button) findViewById(R.id.btnSave);
         img = (ImageView) findViewById(imageView);
+        spinner = (Spinner) findViewById(R.id.spinner2);
 
         edtName.setEnabled(false);
         edtCategory.setEnabled(false);
@@ -46,6 +60,8 @@ public class DetailProductActivity extends AppCompatActivity {
             id = obj.get("id").toString();
             edtName.setText(obj.get("name").toString());
             edtCategory.setText(obj.get("cate_id").toString());
+//            Categories c = new Categories(DetailProductActivity.this);
+//            c.getCategoryById(Integer.parseInt(obj.get("cate_id").toString()));
             edtPrice.setText(obj.get("price").toString());
             edtIntro.setText(obj.get("intro").toString());
             edtDes.setText(obj.get("description").toString());
@@ -55,6 +71,42 @@ public class DetailProductActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
+        arrCate = new ArrayList<>();
+        arrIdCate = new ArrayList<>();
+        Categories c = new Categories(DetailProductActivity.this);
+        jsonArray = c.getCategories();
+        for(int i=0; i<jsonArray.length(); i++) {
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = jsonArray.getJSONObject(i);
+                //Toast.makeText(this, jsonObject.get("name")+"", Toast.LENGTH_SHORT).show();
+                arrCate.add(jsonObject.get("name"));
+                arrIdCate.add(jsonObject.get("id"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        ArrayAdapter adapter = new ArrayAdapter(DetailProductActivity.this, android.R.layout.simple_spinner_item, arrCate);
+        spinner.setAdapter(adapter);
+        // click item
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Object item = parent.getItemAtPosition(position);
+                //chooseId = Integer.parseInt((arrIdCate.get(position).toString()));
+                Toast.makeText(DetailProductActivity.this, arrIdCate.get(position).toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
