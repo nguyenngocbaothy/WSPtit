@@ -15,25 +15,26 @@ import java.util.concurrent.ExecutionException;
 
 public class Permission {
     private static Context context;
-    private String url;
+    private String url = "https://cuongmanh2311.000webhostapp.com";
 
-    public Permission(Context c, String url) {
+    public Permission(Context c) {
         this.context = c;
-        this.url = url;
     }
 
-    public void getAllPermission() {
+    public JSONArray getAllPermission() {
+        JSONArray jsonArray = null;
+
         Get download =  new Get();
         download.execute(this.url + "/permission");
 
         try {
             String data = download.get();
-            JSONArray jsonArray = new JSONArray(data);
-            for(int i=0; i<jsonArray.length(); i++)
-            {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Toast.makeText(context, jsonObject+"", Toast.LENGTH_LONG).show();
-            }
+            jsonArray = new JSONArray(data);
+//            for(int i=0; i<jsonArray.length(); i++)
+//            {
+//                JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                Toast.makeText(context, jsonObject+"", Toast.LENGTH_LONG).show();
+//            }
 
 
         } catch (InterruptedException e) {
@@ -43,6 +44,8 @@ public class Permission {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        return jsonArray;
     }
 
     public void getPermissionById(int id) {
@@ -65,6 +68,21 @@ public class Permission {
     public void postPermission(String name) {
         Post post =  new Post();
         post.execute(this.url + "/permission/store?name=" + name);
+
+        try {
+            String data = post.get();
+            JSONObject obj = new JSONObject(data);
+            if(Boolean.valueOf(obj.get("status").toString())) {
+                Toast.makeText(context, "Create successfully", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     // api bi loi

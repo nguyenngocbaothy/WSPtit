@@ -1,5 +1,6 @@
 package com.developer.nguyenngocbaothy.webserviceptit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,12 +19,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static com.developer.nguyenngocbaothy.webserviceptit.R.id.imageView;
 
 public class DetailProductActivity extends AppCompatActivity {
-    EditText edtName, edtCategory, edtPrice, edtIntro, edtDes;
-    Button btnUpdate, btnSave;
+    EditText edtName, edtPrice, edtIntro, edtDes;
+    Button btnUpdate, btnSave, btnCancel;
     ImageView img;
     Spinner spinner;
 
@@ -34,13 +36,14 @@ public class DetailProductActivity extends AppCompatActivity {
     ArrayList arrCate;
     ArrayList arrIdCate;
     int chooseId = 0;
+    Object cateId;
+    int indexCate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_product);
         edtName = (EditText) findViewById(R.id.edtName);
-        edtCategory = (EditText) findViewById(R.id.edtCate);
         edtPrice = (EditText) findViewById(R.id.edtPrice);
         edtIntro = (EditText) findViewById(R.id.edtIntro);
         edtDes = (EditText) findViewById(R.id.edtDes);
@@ -48,9 +51,10 @@ public class DetailProductActivity extends AppCompatActivity {
         btnSave = (Button) findViewById(R.id.btnSave);
         img = (ImageView) findViewById(imageView);
         spinner = (Spinner) findViewById(R.id.spinner2);
+        btnCancel = (Button) findViewById(R.id.btnCancel);
 
         edtName.setEnabled(false);
-        edtCategory.setEnabled(false);
+        spinner.setEnabled(false);
         edtPrice.setEnabled(false);
         edtIntro.setEnabled(false);
         edtDes.setEnabled(false);
@@ -59,9 +63,7 @@ public class DetailProductActivity extends AppCompatActivity {
             JSONObject obj = new JSONObject(getIntent().getStringExtra("productDetail"));
             id = obj.get("id").toString();
             edtName.setText(obj.get("name").toString());
-            edtCategory.setText(obj.get("cate_id").toString());
-//            Categories c = new Categories(DetailProductActivity.this);
-//            c.getCategoryById(Integer.parseInt(obj.get("cate_id").toString()));
+            cateId = obj.get("cate_id").toString();
             edtPrice.setText(obj.get("price").toString());
             edtIntro.setText(obj.get("intro").toString());
             edtDes.setText(obj.get("description").toString());
@@ -72,7 +74,7 @@ public class DetailProductActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
+        // spinner
         arrCate = new ArrayList<>();
         arrIdCate = new ArrayList<>();
         Categories c = new Categories(DetailProductActivity.this);
@@ -88,8 +90,14 @@ public class DetailProductActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+        indexCate = arrIdCate.indexOf(cateId);
+        Collections.swap(arrCate, indexCate, 0);
+        Collections.swap(arrIdCate, indexCate, 0);
+
         ArrayAdapter adapter = new ArrayAdapter(DetailProductActivity.this, android.R.layout.simple_spinner_item, arrCate);
         spinner.setAdapter(adapter);
+
         // click item
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
@@ -97,7 +105,8 @@ public class DetailProductActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Object item = parent.getItemAtPosition(position);
                 //chooseId = Integer.parseInt((arrIdCate.get(position).toString()));
-                Toast.makeText(DetailProductActivity.this, arrIdCate.get(position).toString(), Toast.LENGTH_SHORT).show();
+                chooseId = Integer.parseInt(arrIdCate.get(position).toString());
+                Toast.makeText(DetailProductActivity.this, String.valueOf(chooseId), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -113,7 +122,7 @@ public class DetailProductActivity extends AppCompatActivity {
             public void onClick(View v) {
                 edtName.setEnabled(true);
                 edtPrice.setEnabled(true);
-                edtCategory.setEnabled(true);
+                spinner.setEnabled(true);
                 edtIntro.setEnabled(true);
                 edtDes.setEnabled(true);
             }
@@ -126,18 +135,28 @@ public class DetailProductActivity extends AppCompatActivity {
                 p.updateProduct(
                         Integer.parseInt(id),
                         edtName.getText().toString(),
-                        Integer.parseInt(edtCategory.getText().toString()),
+                        chooseId,
                         Integer.parseInt(edtPrice.getText().toString()),
                         edtIntro.getText().toString(),
                         edtDes.getText().toString()
                 );
 
                 edtName.setEnabled(false);
-                edtCategory.setEnabled(false);
+                spinner.setEnabled(false);
                 edtPrice.setEnabled(false);
                 edtIntro.setEnabled(false);
                 edtDes.setEnabled(false);
             }
         });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DetailProductActivity.this, ListProduct.class);
+                startActivity(i);
+            }
+        });
+
     }
 }
+

@@ -9,7 +9,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
     String url = "https://cuongmanh2311.000webhostapp.com";
 
-    Button btnProduct, btnCate;
+    Button btnProduct, btnCate, btnPermission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btnProduct = (Button) findViewById(R.id.btnProduct);
         btnCate = (Button) findViewById(R.id.btnCate);
+        btnPermission = (Button) findViewById(R.id.btnPermission);
 
         btnProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, ListCategoryActivity.class);
+                startActivity(i);
+            }
+        });
+
+        btnPermission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, ListPermissionActivity.class);
                 startActivity(i);
             }
         });

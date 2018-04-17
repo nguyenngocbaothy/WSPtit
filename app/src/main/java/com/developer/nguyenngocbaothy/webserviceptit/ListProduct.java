@@ -72,7 +72,7 @@ public class ListProduct extends AppCompatActivity {
                 AlertDialog.Builder alert = new AlertDialog.Builder(ListProduct.this);
                 alert.setTitle("DELETE");
                 alert.setIcon(R.mipmap.ic_launcher);
-                alert.setMessage("Are you sure to delete");
+                alert.setMessage("Are you sure to delete?");
 
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
@@ -82,6 +82,7 @@ public class ListProduct extends AppCompatActivity {
                             JSONObject obj = (JSONObject) jsonArrayProduct.get(position);
                             //Toast.makeText(ListProduct.this, obj.get("id")+"", Toast.LENGTH_SHORT).show();
                             p.deleteProduct(Integer.parseInt(obj.get("id")+""));
+                            arrProduct.remove(position);
                             adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
