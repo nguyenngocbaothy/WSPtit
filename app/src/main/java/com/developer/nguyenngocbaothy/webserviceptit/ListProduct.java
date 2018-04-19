@@ -19,7 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class ListProduct extends AppCompatActivity {
-    String url = "https://cuongmanh2311.000webhostapp.com";
+    String url = "http://thoitranggymer.com";
     ListView listProduct;
 
     ArrayList arrProduct;

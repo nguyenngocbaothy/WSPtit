@@ -1,5 +1,6 @@
 package com.developer.nguyenngocbaothy.webserviceptit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class AddProductActivity extends AppCompatActivity {
 
     EditText edtName, edtPrice, edtIntro, edtDes;
-    Button btnAdd;
+    Button btnAdd, btnCancel;
     Spinner spinner;
 
     JSONArray jsonArray;
@@ -37,6 +38,7 @@ public class AddProductActivity extends AppCompatActivity {
         edtDes = (EditText) findViewById(R.id.edtDes);
         btnAdd = (Button) findViewById(R.id.btnAdd);
         spinner = (Spinner) findViewById(R.id.spinner);
+        btnCancel = (Button) findViewById(R.id.btnCancel);
 
         arrCate = new ArrayList<>();
         arrIdCate = new ArrayList<>();
@@ -84,6 +86,14 @@ public class AddProductActivity extends AppCompatActivity {
                         edtIntro.getText().toString().trim(),
                         edtDes.getText().toString().trim()
                 );
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(AddProductActivity.this, ListProduct.class);
+                startActivity(i);
             }
         });
 

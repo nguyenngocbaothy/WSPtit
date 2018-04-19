@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 public class Permission {
     private static Context context;
-    private String url = "https://cuongmanh2311.000webhostapp.com";
+    private String url = "http://thoitranggymer.com";
 
     public Permission(Context c) {
         this.context = c;
@@ -66,7 +66,7 @@ public class Permission {
     }
 
     public void postPermission(String name) {
-        Post post =  new Post();
+        Post post = new Post();
         post.execute(this.url + "/permission/store?name=" + name);
 
         try {
@@ -92,20 +92,25 @@ public class Permission {
 //    }
 
     // api bi loi
-//    public void deletePermission() {
-//        Get download = new Get();
-//        download.execute("https://cuongmanh2311.000webhostapp.com/permission/delete/" + id);
-//
-//        try {
-//            String data = download.get();
-//            Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
-//
-//
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void deletePermission(int id) {
+        Get download = new Get();
+        download.execute("https://cuongmanh2311.000webhostapp.com/permission/delete/" + id);
+
+        try {
+            String data = download.get();
+            JSONObject obj = new JSONObject(data);
+            if(Boolean.valueOf(obj.get("status").toString())) {
+                Toast.makeText(context, "Create successfully", Toast.LENGTH_SHORT).show();
+            }
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

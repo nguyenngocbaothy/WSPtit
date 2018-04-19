@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 public class Categories {
     private static Context context;
-    private String url = "https://cuongmanh2311.000webhostapp.com";
+    private String url = "http://thoitranggymer.com";
 
     public Categories(Context c) {
         this.context = c;

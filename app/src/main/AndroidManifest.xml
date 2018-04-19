@@ -24,7 +24,8 @@
         <activity android:name=".ListCategoryActivity" />
         <activity android:name=".DetailCategoryActivity" />
         <activity android:name=".AddCategoryActivity" />
-        <activity android:name=".ListPermissionActivity"></activity>
+        <activity android:name=".ListPermissionActivity" />
+        <activity android:name=".AddPermissionActivity"></activity>
     </application>
 
 </manifest>

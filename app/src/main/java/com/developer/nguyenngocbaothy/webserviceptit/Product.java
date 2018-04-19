@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 public class Product {
     private static Context context;
-    private String url = "https://cuongmanh2311.000webhostapp.com";
+    private String url = "http://thoitranggymer.com";
 
     public Product(Context c) {
         this.context = c;
